@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "497804520653",
+    "project_id": "english-mission",
+    "storage_bucket": "english-mission.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497804520653:android:f95af2f3f3867c54ffcd84",
+        "android_client_info": {
+          "package_name": "com.english.mission.english_mission"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497804520653-ov41oervutld0ta1ea5pl1uoanbsb19b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.english.mission.english_mission",
+            "certificate_hash": "c3890fcf01c30e9cc908e3034f5136fb7777d485"
+          }
+        },
+        {
+          "client_id": "497804520653-iqo7omcleqt2g43f1h9p4ndlfii839kc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA547GGhYh47adw6rqY7d402AbbLWTXwTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497804520653-iqo7omcleqt2g43f1h9p4ndlfii839kc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
