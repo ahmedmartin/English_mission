@@ -7,7 +7,7 @@ class Question_controller extends GetxController{
   RxString voice =''.obs;
   RxString text_1 = ''.obs;
   RxString text_2 = ''.obs;
-  List questions_type=['true_false','choose','true_false','translate','voice','choose'].obs;
+  List questions_type=['true_false','choose','translate','voice'].obs;
   List all_answer =[].obs;
   RxString correct_answer=''.obs;
   RxString your_answer=''.obs;
@@ -37,7 +37,7 @@ class Question_controller extends GetxController{
     text_1.value='Lorem ipsum dolor sit amet';
     text_2.value='';
     all_answer=['answer1','answer2','answer3','answer4','answer5','answer6'];
-    correct_answer.value='answer2answer5answer3answer1answer6';
+    correct_answer.value='answer2 answer5 answer3 answer1 answer6';
     your_answer.value='';
     press_0.value=true;press_1.value=true;press_2.value=true;
     press_3.value=true;press_4.value=true;press_5.value=true;
@@ -61,7 +61,7 @@ class Question_controller extends GetxController{
     text_1.value='';
     text_2.value='';
     all_answer=['answer1','answer2','answer3','answer4','answer5','answer6'];
-    correct_answer.value='answer2answer5answer3answer1answer6';
+    correct_answer.value='answer2 answer5 answer3 answer1 answer6';
     your_answer.value='';
     press_0.value=true;press_1.value=true;press_2.value=true;
     press_3.value=true;press_4.value=true;press_5.value=true;

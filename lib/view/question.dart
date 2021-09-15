@@ -49,9 +49,6 @@ class _Question extends State<Question>{
               Obx(()=>Text(question_controller.text_1.value,
                 style: TextStyle(fontSize: 18,color: Colors.blue),)),
 
-              // Text('...................',
-              //   style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.blue),),
-
               Obx(()=>Text('................... '+question_controller.text_2.value,
                 style: TextStyle(fontSize: 18,color: Colors.blue),)),
 
@@ -60,8 +57,14 @@ class _Question extends State<Question>{
                 style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),)),
 
               SizedBox(height: 30,),
+              // if (question_controller.all_answer.length>=3)
+              // then question either choose or translation or voice (should show third button)
+              // else question is true_false (shouldn't show third button)
               firest_row_button(question_controller.all_answer.length>=3),
               SizedBox(height: 20,),
+              // if (question_controller.all_answer.length>3)
+              // then question either translation or voice (should show buttons)
+              // else question either true_false or choose (shouldn't show buttons)
               second_row_button(question_controller.all_answer.length>3),
 
               check_button(),
@@ -74,7 +77,7 @@ class _Question extends State<Question>{
 
   Widget firest_row_button (bool all){
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment:all? MainAxisAlignment.spaceAround:MainAxisAlignment.center,
       children: [
 
         GestureDetector(
@@ -87,16 +90,41 @@ class _Question extends State<Question>{
             child: Text(question_controller.all_answer[0],style: TextStyle(fontSize: 18,color: Colors.white),)
           ),),
           onTap: (){
-            question_controller.press_0.value?
+            // check if button pressed before or not (choose the answer or not)
+           if( question_controller.press_0.value){
+             // if not choose the answer
+             // he wants to add answer to answer list
 
-            answer.add(question_controller.all_answer[0]):
-            answer.removeWhere((element) => element==question_controller.all_answer[0]);
-
-            question_controller.press_0.value=!question_controller.press_0.value;
-            question_controller.your_answer.value=answer.join('  ');
+             // check question type if question (true_false or choose) and he not choose another answer
+             // to be sure choose (only one answer )
+             if((question_controller.questions_type[question_index]=='true_false'||question_controller.questions_type[question_index]=='choose') && answer.isEmpty){
+               // not choose another answer before
+               // add answer to answer list and show it in the screen
+               // answer.add(question_controller.all_answer[0]);
+               // question_controller.press_0.value=!question_controller.press_0.value;
+               // question_controller.your_answer.value=answer.join('  ');
+               question_controller.press_0.value= add_answer(0,question_controller.press_0.value);
+               // check question type if question (translate or voice)
+               // can choose (multiple of answer )
+             }else if(question_controller.questions_type[question_index]=='translate'||question_controller.questions_type[question_index]=='voice'){
+               // add answer to answer list and show it in the screen
+               // answer.add(question_controller.all_answer[0]);
+               // question_controller.press_0.value=!question_controller.press_0.value;
+               // question_controller.your_answer.value=answer.join('  ');
+               question_controller.press_0.value= add_answer(0,question_controller.press_0.value);
+             }
+           }else {
+             // if choose the answer
+             // he choose this answer before then he wants to remove this answer from answer list
+             // remove answer from answer list and show a new answer in screen
+             // answer.removeWhere((element) => element == question_controller.all_answer[0]);
+             // question_controller.press_0.value=!question_controller.press_0.value;
+             // question_controller.your_answer.value=answer.join('  ');
+             question_controller.press_0.value= remove_answer(0,question_controller.press_0.value );
+           }
           },
         ),
-
+        all?Container():SizedBox(width: 20,),
         GestureDetector(
           child: Obx(()=>Container(
             decoration: BoxDecoration(
@@ -107,13 +135,29 @@ class _Question extends State<Question>{
             child: Text(question_controller.all_answer[1],style: TextStyle(fontSize: 18,color: Colors.white),),
           ),),
           onTap: (){
-            question_controller.press_1.value?
+            // check if button pressed before or not (choose the answer or not)
+            if(question_controller.press_1.value){
+              // if not choose the answer
+              // he wants to add answer to answer list
 
-            answer.add(question_controller.all_answer[1]):
-            answer.removeWhere((element) => element==question_controller.all_answer[1]);
-
-            question_controller.press_1.value=!question_controller.press_1.value;
-            question_controller.your_answer.value=answer.join('  ');
+              // check question type if question (true_false or choose) and he not choose another answer
+              // to be sure choose (only one answer )
+              if((question_controller.questions_type[question_index]=='true_false'||question_controller.questions_type[question_index]=='choose') && answer.isEmpty) {
+                // not choose another answer before
+                // add answer to answer list and show it in the screen
+                question_controller.press_1.value= add_answer(1, question_controller.press_1.value);
+                // check question type if question (translate or voice)
+                // can choose (multiple of answer )
+              }else if(question_controller.questions_type[question_index]=='translate'||question_controller.questions_type[question_index]=='voice'){
+                // add answer to answer list and show it in the screen
+                question_controller.press_1.value= add_answer(1, question_controller.press_1.value);
+              }
+            }else {
+              // if choose the answer
+              // he choose this answer before then he wants to remove this answer from answer list
+              // remove answer from answer list and show a new answer in screen
+              question_controller.press_1.value= remove_answer(1, question_controller.press_1.value);
+            }
           },
         ),
 
@@ -127,15 +171,36 @@ class _Question extends State<Question>{
             child: Text(question_controller.all_answer[2],style: TextStyle(fontSize: 18,color: Colors.white),),
           ),),
           onTap: (){
-            question_controller.press_2.value?
+            // check if button pressed before or not (choose the answer or not)
+            if(question_controller.press_2.value){
+              // if not choose the answer
+              // he wants to add answer to answer list
 
-            answer.add(question_controller.all_answer[2]):
-            answer.removeWhere((element) => element==question_controller.all_answer[2]);
+              // check question type if question (choose) and he not choose another answer
+              // (don't care about true_false cause this button not be visible there)
+              // to be sure choose (only one answer )
+              if(question_controller.questions_type[question_index]=='choose' && answer.isEmpty) {
+                // not choose another answer before
+                // add answer to answer list and show it in the screen
 
-            question_controller.press_2.value=!question_controller.press_2.value;
-            question_controller.your_answer.value=answer.join('  ');
+                question_controller.press_2.value= add_answer(2, question_controller.press_2.value);
+                // check question type if question (translate or voice)
+                // can choose (multiple of answer )
+              }else if(question_controller.questions_type[question_index]=='translate'||question_controller.questions_type[question_index]=='voice'){
+                // add answer to answer list and show it in the screen
+
+                question_controller.press_2.value= add_answer(2, question_controller.press_2.value);
+              }
+            }else {
+              // if choose the answer
+              // he choose this answer before then he wants to remove this answer from answer list
+              // remove answer from answer list and show a new answer in screen
+
+              question_controller.press_2.value= remove_answer(2, question_controller.press_2.value);
+            }
+
           },
-        ):Container(),
+        ):SizedBox(),
       ],
     );
   }
@@ -156,12 +221,8 @@ class _Question extends State<Question>{
           ),),
           onTap: (){
             question_controller.press_3.value?
-
-            answer.add(question_controller.all_answer[3]):
-            answer.removeWhere((element) => element==question_controller.all_answer[3]);
-            question_controller.press_3.value=!question_controller.press_3.value;
-
-            question_controller.your_answer.value=answer.join('  ');
+              question_controller.press_3.value= add_answer(3, question_controller.press_3.value):
+              question_controller.press_3.value= remove_answer(3, question_controller.press_3.value);
           },
         ),
 
@@ -176,12 +237,8 @@ class _Question extends State<Question>{
           ),),
           onTap: (){
             question_controller.press_4.value?
-
-            answer.add(question_controller.all_answer[4]):
-            answer.removeWhere((element) => element==question_controller.all_answer[4]);
-            question_controller.press_4.value=!question_controller.press_4.value;
-
-            question_controller.your_answer.value=answer.join('  ');
+              question_controller.press_4.value= add_answer(4, question_controller.press_4.value):
+              question_controller.press_4.value= remove_answer(4, question_controller.press_4.value);
           },
         ),
 
@@ -196,12 +253,8 @@ class _Question extends State<Question>{
           ),),
            onTap: (){
              question_controller.press_5.value?
-
-             answer.add(question_controller.all_answer[5]):
-             answer.removeWhere((element) => element==question_controller.all_answer[5]);
-             question_controller.press_5.value=!question_controller.press_5.value;
-
-             question_controller.your_answer.value=answer.join('  ');
+               question_controller.press_5.value= add_answer(5, question_controller.press_5.value):
+               question_controller.press_5.value= remove_answer(5, question_controller.press_5.value);
            },
          ),
       ],
@@ -223,16 +276,17 @@ class _Question extends State<Question>{
             child: Text('check', style: TextStyle(color:question_controller.your_answer.isNotEmpty?
             Colors.white:Colors.grey,fontSize: 20,fontWeight: FontWeight.bold ),),
           ),
-          onTap: (){
+          onTap: () async {
               // if answer list have text you can press on button
               // if empty then your answer correct
               if(answer.isNotEmpty) {
                 // check if user answer == correct answer
-                if(question_controller.correct_answer.value != answer.join('') ){
+                if(question_controller.correct_answer.value != answer.join(' ') ){
                     // for wrong answer pop up snack bar  with message 'wrong answer'
                 Get.snackbar('Wrong Answer', 'Wrong Answer Please Try Again And Practice More',
                     backgroundColor: Colors.red, colorText: Colors.black, duration: Duration(seconds: 2),
                     snackPosition: SnackPosition.BOTTOM, padding: EdgeInsets.all(25)) ;
+                AudioCache().play('wrong.mp3');
                 }else {
                   answer = [];
                   // for correct answer pop up snack bar 'correct answer'
@@ -263,9 +317,16 @@ class _Question extends State<Question>{
                           }
                         } else {
                           // if finished all question go to road map screen again
-                          Get.offAll(Home());
+                          AudioCache().play('celebrate.mp3');
+                          Get.defaultDialog(
+                            barrierDismissible: false,
+                            title: 'Congratulation',
+                            content: Image.asset('assets/congratulation.gif'),//network('https://i.pinimg.com/originals/93/d2/88/93d2882e452875ffe11f3cc7aeba2b6f.gif'),
+                            onConfirm: ()=>Get.offAll(Home()),
+                          );
                         }
                       });
+                  AudioCache().play('correct.mp3');
                 }
               }
 
@@ -274,6 +335,19 @@ class _Question extends State<Question>{
       ),
     ));
 
+  }
+
+  bool add_answer(int answer_index,bool press){
+
+    answer.add(question_controller.all_answer[answer_index]);
+    question_controller.your_answer.value=answer.join('  ');
+    return !press;
+  }
+
+  bool remove_answer(int answer_index,bool press){
+    answer.removeWhere((element) => element == question_controller.all_answer[answer_index]);
+    question_controller.your_answer.value=answer.join('  ');
+    return !press;
   }
 
 }

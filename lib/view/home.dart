@@ -1,5 +1,7 @@
+import 'package:english_mission/view/note_bad.dart';
 import 'package:english_mission/view/road_map.dart';
 import 'package:english_mission/view/signup.dart';
+import 'package:english_mission/view/store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +122,9 @@ class _Home extends State<Home>{
                   radius: 20,
                   child: Icon(Icons.sticky_note_2_rounded,size: 25,color: Colors.blue,),
                 ),
-                onTap: (){},
+                onTap: (){
+                  Get.to(Note_pad());
+                },
               ),
 
               //dictionary
@@ -150,7 +154,9 @@ class _Home extends State<Home>{
                   radius: 20,
                   child: Icon(Icons.store,size: 25,color: Colors.blue,),
                 ),
-                onTap: (){},
+                onTap: (){
+                  Get.to(Store());
+                },
               ),
             ],
           ),

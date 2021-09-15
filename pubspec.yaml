@@ -32,8 +32,8 @@ dependencies:
   firebase_auth: ^3.1.0
   firebase_core: ^1.6.0
   firebase_database: ^7.2.1
-#  assets_audio_player:
   audioplayers:
+  url_launcher:
 
 
 dev_dependencies:
