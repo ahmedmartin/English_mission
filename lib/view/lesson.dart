@@ -5,10 +5,18 @@ import 'package:english_mission/view/question.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class Lesson extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return _Lesson();
+  }
 
-class Lesson extends StatelessWidget{
+}
+
+class _Lesson extends State<Lesson>{
 
   double screen_width = 0;
+  int screen_index =0;
   
   @override
   Widget build(BuildContext context) {
@@ -58,22 +66,29 @@ class Lesson extends StatelessWidget{
       ),
 
       // ---- continue button -----------
-      floatingActionButton:Obx(()=> Row(
+      floatingActionButton:Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
-          Visibility(
-            visible:lesson_controller.screen_index.value!=1 ,
+           Visibility(
+            visible:screen_index!=0 ,
             child: Padding(
               padding: EdgeInsets.only(left: 10),
               child: FloatingActionButton(
                 heroTag: 'before',
                 onPressed: () {
-                  switch (lesson_controller.screen_index.value ){
-                    case 2: {lesson_controller.screne_1(); lesson_controller.screen_index.value = 1; break;}
-                    case 3: {lesson_controller.screne_2(); lesson_controller.screen_index.value = 2; break;}
-                    case 4: {lesson_controller.screne_3(); lesson_controller.screen_index.value = 3; break;}
+                  screen_index--;
+                  setState(() {});
+                  switch(lesson_controller.lessons_type[screen_index]){
+                    case 'screen_1':lesson_controller.screen_1();break;
+                    case 'screen_2':lesson_controller.screen_2();break;
+                    case 'screen_3':lesson_controller.screen_3();break;
+                    case 'screen_4':lesson_controller.screen_4();break;
                   }
+                  // switch (lesson_controller.screen_index.value ){
+                  //   case 2: {lesson_controller.screne_1(); lesson_controller.screen_index.value = 1; break;}
+                  //   case 3: {lesson_controller.screne_2(); lesson_controller.screen_index.value = 2; break;}
+                  //   case 4: {lesson_controller.screne_3(); lesson_controller.screen_index.value = 3; break;}
+                  // }
                 },
                 child: Icon(Icons.navigate_before,color: Colors.white,size: 50,),
               ),
@@ -88,19 +103,38 @@ class Lesson extends StatelessWidget{
               child: FloatingActionButton(
                 heroTag: 'next',
                 onPressed: () {
-                  switch (lesson_controller.screen_index.value ){
-                    case 1: {lesson_controller.screne_2(); lesson_controller.screen_index.value = 2; break;}
-                    case 2: {lesson_controller.screne_3(); lesson_controller.screen_index.value = 3; break;}
-                    case 3: {lesson_controller.screne_4(); lesson_controller.screen_index.value = 4; break;}
-                    case 4: Get.to(Question());
-                  }
+                  screen_index++;
+                  setState(() {});
+                  if(screen_index<lesson_controller.lessons_type.length) {
+                    switch (lesson_controller.lessons_type[screen_index]) {
+                      case 'screen_1':
+                        lesson_controller.screen_1();
+                        break;
+                      case 'screen_2':
+                        lesson_controller.screen_2();
+                        break;
+                      case 'screen_3':
+                        lesson_controller.screen_3();
+                        break;
+                      case 'screen_4':
+                        lesson_controller.screen_4();
+                        break;
+                    }
+                  }else
+                    Get.to(Question());
+                  // switch (lesson_controller.screen_index.value ){
+                  //   case 1: {lesson_controller.screne_2(); lesson_controller.screen_index.value = 2; break;}
+                  //   case 2: {lesson_controller.screne_3(); lesson_controller.screen_index.value = 3; break;}
+                  //   case 3: {lesson_controller.screne_4(); lesson_controller.screen_index.value = 4; break;}
+                  //   case 4: Get.to(Question());
+                  // }
                 },
                 child: Icon(Icons.navigate_next,color: Colors.white,size: 50,),
               ),
             ),
           )
         ],
-      ),) ,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -110,7 +144,7 @@ class Lesson extends StatelessWidget{
     return Container(
       width: screen_width/2,
       height: 150,
-      child: Image.network(url),
+      child: FadeInImage.assetNetwork(placeholder: 'assets/fade_image.gif',image:url),
     );
   }
 

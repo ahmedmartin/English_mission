@@ -10,15 +10,16 @@ class Lesson_controller extends GetxController{
   RxString text_2 = ''.obs;
   RxString image_2 =''.obs;
   RxString example =''.obs;
-  RxInt screen_index =1.obs;
+  List<String> lessons_type=['screen_1','screen_2','screen_3','screen_4','screen_3'];
   //List screens = ['screen_1','screen_2','screen_3','screen_4'];
 
   @override
   void onInit() {
-    screne_1();
+    screen_1();
   }
 
-  screne_1 (){
+  // title , image1 , text1 , text2 , example
+  screen_1 (){
     title.value='Lerom Ipsom';
     image_1.value='https://thumbs.dreamstime.com/b/english-lessons-chalkboard-eps-16074796.jpg';
     text_1.value='ahmed ahmed ahmed Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum';
@@ -27,7 +28,8 @@ class Lesson_controller extends GetxController{
     example.value='ex: Lorem ipsum dolor sit amet, consetetur sadipscing elitr /n ex:sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat ';
   }
 
-  screne_2 (){
+  //title , image1 , text1 , text2 , image2 , example
+  screen_2 (){
     title.value='Lerom Ipsom';
     image_1.value='https://thumbs.dreamstime.com/b/english-lessons-chalkboard-eps-16074796.jpg';
     text_1.value='frmofmrovmofvnfoivn Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum';
@@ -36,7 +38,8 @@ class Lesson_controller extends GetxController{
     example.value='ex: Lorem ipsum dolor sit amet, consetetur sadipscing elitr /n ex:sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat ';
   }
 
-  screne_3 (){
+  //title , text1 , text2 , example
+  screen_3 (){
     title.value='Lerom Ipsom';
     image_1.value = '';
     text_1.value='martin martin martin Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum';
@@ -45,7 +48,8 @@ class Lesson_controller extends GetxController{
     example.value='ex: Lorem ipsum dolor sit amet, consetetur sadipscing elitr /n ex:sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat ';
   }
 
-  screne_4 (){
+  //title , text1 , text2 , image2 , example
+  screen_4 (){
     title.value='Lerom Ipsom';
     image_1.value='';
     text_1.value='kkkksssskdkskskskssk Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum';

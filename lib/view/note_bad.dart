@@ -20,6 +20,10 @@ class _Note_pad extends State<Note_pad>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Word's Bank",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),),
+      ),
       body: Padding(
         padding: EdgeInsets.all(20),
         child:ListView.builder(
@@ -30,7 +34,6 @@ class _Note_pad extends State<Note_pad>{
                   color: index%2 == 0?Colors.lightBlue.withOpacity(.1):Colors.white,
                   borderRadius: BorderRadius.circular(20)
                 ),
-                
                 height: 80,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -47,37 +50,44 @@ class _Note_pad extends State<Note_pad>{
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add,color: Colors.white,size: 40,),
         onPressed: (){
+          print(Get.height);
           Get.defaultDialog(
             title: 'add new word to your note bad',
-            contentPadding: EdgeInsets.all(30),
-            content: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border:OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      hintText: 'ex"كلب"',
-                      labelText: 'word'
-                    ),
-                    controller: word_controller,
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  SizedBox(height: 25),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        border:OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
+            titlePadding: EdgeInsets.all(8),
+            contentPadding: EdgeInsets.all(10),
+            content: Container(
+              height: Get.height <550 ?Get.height/9:Get.height/5,
+              child: SingleChildScrollView(
+                child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border:OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          hintText: 'ex"كلب"',
+                          labelText: 'word'
                         ),
-                        hintText: 'ex"dog"',
-                        labelText: 'translation'
-                    ),
-                    controller: translate_controller,
-                    style: TextStyle(color: Colors.blue),
+                        controller: word_controller,
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      SizedBox(height: 18),
+                      TextFormField(
+                        decoration: InputDecoration(
+                            border:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            hintText: 'ex"dog"',
+                            labelText: 'translation'
+                        ),
+                        controller: translate_controller,
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      //SizedBox(height: 40,)
+                    ],
                   ),
-                  SizedBox(height: 40,)
-                ],
               ),
+            ),
             //confirm: Text('add'),
             onConfirm: (){
               if(word_controller.text.isNotEmpty&&translate_controller.text.isNotEmpty) {

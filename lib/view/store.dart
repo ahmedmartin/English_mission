@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -47,9 +48,9 @@ class Store extends StatelessWidget{
           SizedBox(height: 10,),
           // image view
           Container(
-            width: 300,
-            height: 150,
-            child: Image.network(courses[index].img_url!),
+            width: Get.size.width/2,
+            height: Get.size.height/6,
+            child: FadeInImage.assetNetwork(placeholder: 'assets/fade_image.gif',image:courses[index].img_url!),
           ),
           // description view
           Container(
@@ -57,7 +58,7 @@ class Store extends StatelessWidget{
               borderRadius: BorderRadius.circular(10),
               color: Colors.blue,
             ),
-            height: 160,
+            height: Get.size.height/5,
             padding: EdgeInsets.all(6),
             child:Text(//courses[index].description!.length>150?courses[index].description!.substring(0,155):
             courses[index].description!,style: TextStyle(fontSize: 16,color: Colors.white),) ,

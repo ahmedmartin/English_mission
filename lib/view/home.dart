@@ -1,4 +1,5 @@
 import 'package:english_mission/view/note_bad.dart';
+import 'package:english_mission/view/profile.dart';
 import 'package:english_mission/view/road_map.dart';
 import 'package:english_mission/view/signup.dart';
 import 'package:english_mission/view/store.dart';
@@ -46,16 +47,17 @@ class _Home extends State<Home>{
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
-                  height: 50,
+                 // height: 50,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(80),bottomRight:Radius.circular(80),
+                    topLeft: Radius.circular(100),bottomLeft: Radius.circular(100)),
                     color: Colors.blue,
                   ),
                   padding: EdgeInsets.only(right: 20),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    //crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset('assets/coin.png'),
+                      CircleAvatar(backgroundImage: AssetImage('assets/coin.png'),radius: 25,),
                       SizedBox(width: 10,),
                       Text(0.toString(),style: TextStyle(fontSize: 18,color: Colors.white),)
                     ],
@@ -111,7 +113,7 @@ class _Home extends State<Home>{
                   child: Icon(Icons.person,size:25,color: Colors.blue,),
                 ),
                 onTap: (){
-
+                   Get.to(Profile());
                 },
               ),
 
@@ -172,20 +174,17 @@ class _Home extends State<Home>{
       children: [
         // ---------------------ielts----------------
         GestureDetector(
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 50,
-            backgroundImage: NetworkImage('https://myhobbycourses.com/sites/default/files/IELTS-scaled.jpg'),
+          child: ClipOval(
+            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/6,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://myhobbycourses.com/sites/default/files/IELTS-scaled.jpg'),
           ),
           onTap: (){},
         ),
 
         //----------- toefl  ----------------------
         GestureDetector(
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 50,
-            backgroundImage: NetworkImage('https://image.shutterstock.com/image-vector/toefl-word-concept-test-english-260nw-1565002888.jpg'),
+
+          child: ClipOval(
+            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/6,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://image.shutterstock.com/image-vector/toefl-word-concept-test-english-260nw-1565002888.jpg'),
           ),
           onTap: (){},
         ),
@@ -197,11 +196,8 @@ class _Home extends State<Home>{
   Widget general_course(){
     return // ------------------------general english----------------------------
       GestureDetector(
-        child: CircleAvatar(
-          backgroundColor: Colors.white,
-          radius: 80,
-          backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/english-lesson-school-cartoon-people-characters-illustration-teacher-happy-student-speaking-blackboard-98066415.jpg'),
-
+        child: ClipOval(
+          child: FadeInImage.assetNetwork(width: Get.width/2,height: Get.height/4,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://thumbs.dreamstime.com/b/english-lesson-school-cartoon-people-characters-illustration-teacher-happy-student-speaking-blackboard-98066415.jpg'),
         ),
         onTap: (){
           Get.to(Road_map());

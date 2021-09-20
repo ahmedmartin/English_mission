@@ -38,11 +38,10 @@ class Road_map extends StatelessWidget{
       padding: EdgeInsets.only(left: 14,right: 14,top: 10,bottom: 10),
       child: Align(
         alignment:index%2==0? Alignment.topLeft:Alignment.topRight,
-        child: CircleAvatar(
-          backgroundColor: Colors.white,
-          radius: 70,
-          backgroundImage: NetworkImage(road_map_controller.levels[index]),
+        child: ClipOval(
+          child: FadeInImage.assetNetwork(width: Get.width/2,height: Get.height/4,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:road_map_controller.levels[index]),
         ),
+
       ),
     );
   }

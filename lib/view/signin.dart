@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -25,14 +26,12 @@ class _SignIn extends State<SignIn>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-
             // phone input form field
             SizedBox(height: 20,),
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                hintText: 'Phone Number',
+                hintText: 'Phone Number ex "+201xxxxxxxxxxx"',
                 border:OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -40,6 +39,13 @@ class _SignIn extends State<SignIn>{
               controller: phone_controller,
               //textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14) ,
+              onTap: (){showCountryPicker(
+                context: context,
+                showPhoneCode: true, // optional. Shows phone code before the country name.
+                onSelect: (Country country) {
+                  phone_controller.text='+'+country.phoneCode;
+                },
+              );},
             ),
 
             SizedBox(height: 20,),
@@ -58,7 +64,7 @@ class _SignIn extends State<SignIn>{
               onTap: (){
 
                   if (phone_controller.text.isNotEmpty) {
-                    if (phone_controller.text.length == 11) {
+                   // if (phone_controller.text.length == 11) {
                       firebase_Auth();
                     } else{
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
@@ -66,12 +72,12 @@ class _SignIn extends State<SignIn>{
                         duration: Duration(seconds: 5),
                         backgroundColor: Colors.blue,
                       ));}
-                  } else{
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
-                    Text('Phone is required', style: TextStyle(fontSize: 20),),
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.blue,
-                    ));}
+                  // } else{
+                  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
+                  //   Text('Phone is required', style: TextStyle(fontSize: 20),),
+                  //     duration: Duration(seconds: 5),
+                  //     backgroundColor: Colors.blue,
+                  //   ));}
 
               },
             ),
@@ -88,7 +94,7 @@ class _SignIn extends State<SignIn>{
 
     FirebaseAuth auth = FirebaseAuth.instance;
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+2'+phone_controller.text,
+      phoneNumber:phone_controller.text, //'+2'+phone_controller.text,
       verificationCompleted: (PhoneAuthCredential credential) async{
         await auth.signInWithCredential(credential).whenComplete((){
           print('sign in');
@@ -117,13 +123,19 @@ class _SignIn extends State<SignIn>{
   enter_sms_code(){
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
               child:  AlertDialog(
                 title: new Text('enter code sent in sms ',style: TextStyle(fontSize: 30,color: Colors.black),textAlign: TextAlign.center,),
                 content: TextFormField(
-                  decoration: InputDecoration(hintText: 'code...'),
+                  decoration: InputDecoration(
+                    border:OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    labelText: 'code'
+                  ),
                   keyboardType:TextInputType.number,
                   textAlign: TextAlign.center,
                   controller: sms_code,
@@ -131,11 +143,13 @@ class _SignIn extends State<SignIn>{
                 ),
                 actions: [
                   GestureDetector(child: Container(
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(20),
+                       color: Colors.blue,
+                     ),
                       padding: EdgeInsets.all(20),
-                      color: Colors.blue,
-                      child: Text('send',style: TextStyle(color: Colors.black,fontSize: 20),)),
+                      child: Text('send',style: TextStyle(color: Colors.white,fontSize: 20),)),
                     onTap: ()async{
-
                       if(verificationId != null) {
                         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: sms_code.text);
                         // Sign the user in (or link) with the credential

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,10 +45,11 @@ class _SignUp extends State<SignUp>{
 
             // phone input form field
             SizedBox(height: 20,),
+
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                hintText: 'Phone Number',
+                hintText: 'Phone Number ex"+201xxxxxxxxxx"',
                 border:OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -55,6 +57,13 @@ class _SignUp extends State<SignUp>{
               controller: phone_controller,
               //textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14) ,
+              onTap: (){showCountryPicker(
+                context: context,
+                showPhoneCode: true, // optional. Shows phone code before the country name.
+                onSelect: (Country country) {
+                  phone_controller.text='+'+country.phoneCode;
+                },
+              );},
             ),
 
             SizedBox(height: 20,),
@@ -73,7 +82,7 @@ class _SignUp extends State<SignUp>{
               onTap: (){
                 if(name_controller.text.isNotEmpty) {
                   if (phone_controller.text.isNotEmpty) {
-                    if (phone_controller.text.length == 11) {
+                   // if (phone_controller.text.length == 11) {
                       firebase_Auth();
                     } else{
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
@@ -87,12 +96,12 @@ class _SignUp extends State<SignUp>{
                       duration: Duration(seconds: 5),
                       backgroundColor: Colors.blue,
                     ));}
-                }else{
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
-                  Text('name is required',style: TextStyle(fontSize: 20),),
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Colors.blue,
-                  ));}
+                // }else{
+                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
+                //   Text('name is required',style: TextStyle(fontSize: 20),),
+                //     duration: Duration(seconds: 5),
+                //     backgroundColor: Colors.blue,
+                //   ));}
               },
             ),
 
@@ -108,7 +117,7 @@ class _SignUp extends State<SignUp>{
 
     FirebaseAuth auth = FirebaseAuth.instance;
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+2'+phone_controller.text,
+      phoneNumber:phone_controller.text, //'+2'+phone_controller.text,
       verificationCompleted: (PhoneAuthCredential credential) async{
         await auth.signInWithCredential(credential).whenComplete((){
           print('sign in');
@@ -143,7 +152,12 @@ class _SignUp extends State<SignUp>{
               child:  AlertDialog(
                 title: new Text('enter code sent in sms ',style: TextStyle(fontSize: 30,color: Colors.black),textAlign: TextAlign.center,),
                 content: TextFormField(
-                  decoration: InputDecoration(hintText: 'code...'),
+                  decoration: InputDecoration(
+                      border:OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      labelText: 'code'
+                  ),
                   keyboardType:TextInputType.number,
                   textAlign: TextAlign.center,
                   controller: sms_code,
@@ -151,8 +165,11 @@ class _SignUp extends State<SignUp>{
                 ),
                 actions: [
                   GestureDetector(child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blue,
+                      ),
                       padding: EdgeInsets.all(20),
-                      color: Colors.blue,
                       child: Text('send',style: TextStyle(color: Colors.black,fontSize: 20),)),
                     onTap: ()async{
 
