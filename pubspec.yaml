@@ -32,10 +32,15 @@ dependencies:
   firebase_auth: ^3.1.0
   firebase_core: ^1.6.0
   firebase_database: ^7.2.1
+  cloud_firestore: ^2.5.3
+  translator: ^0.1.7
+  language_picker: ^0.4.1
   audioplayers:
   url_launcher:
   country_picker: ^2.0.8
   percent_indicator: ^3.3.0-nullsafety.1
+  internet_connection_checker: ^0.0.1+2
+
 
 
 dev_dependencies:

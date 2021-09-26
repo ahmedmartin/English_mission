@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:english_mission/model/question_model.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 
 class Question_controller extends GetxController{
@@ -7,25 +12,67 @@ class Question_controller extends GetxController{
   RxString voice =''.obs;
   RxString text_1 = ''.obs;
   RxString text_2 = ''.obs;
-  List questions_type=['true_false','choose','translate','voice'].obs;
+  List questions_type=[].obs;
   List all_answer =[].obs;
   RxString correct_answer=''.obs;
   RxString your_answer=''.obs;
   RxBool press_0=true.obs,press_1=true.obs,press_2=true.obs;
   RxBool press_3=true.obs,press_4=true.obs,press_5=true.obs;
+  List<QueryDocumentSnapshot> data =[];
+  Question_model question_model = Question_model('1');
+  int question_index =0;
+  RxBool wait = true.obs;
+  StreamSubscription<InternetConnectionStatus> ?listener ;
 
   @override
-  void onInit() {
-    true_false();
+  void onInit() async{
+    listener = InternetConnectionChecker().onStatusChange.listen(
+          (InternetConnectionStatus status) {
+        switch (status) {
+          case InternetConnectionStatus.connected:
+          // ignore: avoid_print
+            wait.value=false;
+            _get_data();
+            break;
+          case InternetConnectionStatus.disconnected:
+          // ignore: avoid_print
+            wait.value=true;
+            break;
+        }
+      },
+    );
+  }
+
+  _get_data() async {
+    data = await question_model.get_questions();
+    if(data!=null)
+      _questions_type();
+
+
+    switch (questions_type[question_index]) {
+      case 'true_false': true_false(); break;
+      case 'choose' : choose(); break;
+      case 'translate' : translate(); break;
+      case 'voice' : voice_listener(); break;
+    }
+  }
+
+  _questions_type(){
+    wait.value = false;
+    data.forEach((element) {
+      print(element['question_type']);
+      questions_type.add(element['question_type']);
+    });
   }
 
   true_false(){
+
     title.value='True OR False';
     voice.value='';
-    text_1.value='consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat';
+    text_1.value=data[question_index]['text_1'];
     text_2.value='';
     all_answer=['true','false'];
-    correct_answer.value='true';
+    correct_answer.value=data[question_index]['correct_answer'];
     your_answer.value='';
     press_0.value=true;press_1.value=true;press_2.value=true;
     press_3.value=true;press_4.value=true;press_5.value=true;
@@ -34,10 +81,10 @@ class Question_controller extends GetxController{
   translate(){
     title.value='Translate';
     voice.value='';
-    text_1.value='Lorem ipsum dolor sit amet';
+    text_1.value=data[question_index]['text_1'];
     text_2.value='';
-    all_answer=['answer1','answer2','answer3','answer4','answer5','answer6'];
-    correct_answer.value='answer2 answer5 answer3 answer1 answer6';
+    all_answer=data[question_index]['all_answer'];
+    correct_answer.value=data[question_index]['correct_answer'];
     your_answer.value='';
     press_0.value=true;press_1.value=true;press_2.value=true;
     press_3.value=true;press_4.value=true;press_5.value=true;
@@ -46,10 +93,10 @@ class Question_controller extends GetxController{
   choose(){
     title.value='Choose Correct Answer';
     voice.value='';
-    text_1.value='Lorem ipsum dolor sit amet';
-    text_2.value='dolor sit';
-    all_answer=['answer1','answer2','answer3'];
-    correct_answer.value='answer2';
+    text_1.value=data[question_index]['text_1'];
+    text_2.value=data[question_index]['text_2'];
+    all_answer=data[question_index]['all_answer'];
+    correct_answer.value=data[question_index]['correct_answer'];
     your_answer.value='';
     press_0.value=true;press_1.value=true;press_2.value=true;
     press_3.value=true;press_4.value=true;press_5.value=true;
@@ -57,11 +104,11 @@ class Question_controller extends GetxController{
 
   voice_listener(){
     title.value = 'choose the words according to what you hear';
-    voice.value='https://res.cloudinary.com/daxdz7knl/video/upload/v1631105118/WhatsApp_Audio_2021-09-08_at_1.52.24_PM_xmeki3.mp3';//'https://luan.xyz/files/audio/nasa_on_a_mission.mp3';
+    voice.value=data[question_index]['voice'];
     text_1.value='';
     text_2.value='';
-    all_answer=['answer1','answer2','answer3','answer4','answer5','answer6'];
-    correct_answer.value='answer2 answer5 answer3 answer1 answer6';
+    all_answer=data[question_index]['all_answer'];
+    correct_answer.value=data[question_index]['correct_answer'];
     your_answer.value='';
     press_0.value=true;press_1.value=true;press_2.value=true;
     press_3.value=true;press_4.value=true;press_5.value=true;

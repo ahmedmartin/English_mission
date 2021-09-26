@@ -1,13 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+class Store extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return _Store();
+  }
 
+}
 
-class Store extends StatelessWidget{
+class _Store extends State<Store>{
 
   //'https://dev.courses.philanthropyu.org/asset-v1:PhillU+CAD+CAD1+type@asset+block@course2.png'
- List<Course> courses =[Course('title', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor', 'https://www.mirrorminds.in/images/digital-marketing.png', 'https://www.selicaie.com'),
+ List<Course> courses =[/*Course('title', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor', 'https://www.mirrorminds.in/images/digital-marketing.png', 'https://www.selicaie.com'),
    Course('title', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore', 'https://www.reliablesoft.net/wp-content/uploads/2019/08/digital-marketing-courses.png', 'https://www.selicaie.com'),
    Course('title', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt', 'https://cdn.searchenginejournal.com/wp-content/uploads/2020/04/the-digital-marketing-agency-focused-covid-19-post-i-didnt-want-to-write-5e8accf484fe3-1520x800.png', 'https://www.selicaie.com'),
    Course('title', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor', 'https://www.mirrorminds.in/images/digital-marketing.png', 'https://www.selicaie.com'),
@@ -15,10 +22,32 @@ class Store extends StatelessWidget{
    Course('title', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,', 'https://www.mirrorminds.in/images/digital-marketing.png', 'https://www.selicaie.com'),
    Course('title', 'description Lorem ipsum dolor sit amet,', 'https://www.reliablesoft.net/wp-content/uploads/2019/08/digital-marketing-courses.png', 'https://www.selicaie.com'),
    Course('title', 'description Lorem ipsum dolor sit amet,', 'https://www.reliablesoft.net/wp-content/uploads/2019/08/online-digital-marketing-course.png', 'https://www.selicaie.com'),
-   Course('title', 'description Lorem ipsum dolor sit amet,', 'https://www.reliablesoft.net/wp-content/uploads/2019/08/digital-marketing-courses.png', 'https://www.selicaie.com')];
+   Course('title', 'description Lorem ipsum dolor sit amet,', 'https://www.reliablesoft.net/wp-content/uploads/2019/08/digital-marketing-courses.png', 'https://www.selicaie.com')*/];
+
+ get_courses(){
+   FirebaseFirestore.instance.collection('store').get().then((snapshot){
+       snapshot.docs.forEach((element) {
+          Course temp = Course(element['title'], element['description'], element['image_url'], element['link']);
+          setState(() {
+            courses.add(temp);
+          });
+       });
+   });
+ }
+
+ @override
+  void initState() {
+    get_courses();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Store",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+      ),
       body: GridView.builder(
           itemCount:courses.length ,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

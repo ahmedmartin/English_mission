@@ -19,7 +19,7 @@ class _SignUp extends State<SignUp>{
 
   TextEditingController name_controller = TextEditingController();
   TextEditingController phone_controller = TextEditingController();
-
+  bool wait = false;
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +77,13 @@ class _SignUp extends State<SignUp>{
                 ),
                 padding: EdgeInsets.all(20),
                 //color: Colors.blue,
-                child: Text('Register',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),),
+                child: wait?CircularProgressIndicator(color: Colors.white,):Text('Register',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),),
               ),
               onTap: (){
                 if(name_controller.text.isNotEmpty) {
                   if (phone_controller.text.isNotEmpty) {
-                   // if (phone_controller.text.length == 11) {
-                      firebase_Auth();
+                    setState(() {wait=true;});
+                    firebase_Auth();
                     } else{
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
                       Text('phone should be 11 number', style: TextStyle(fontSize: 20),),
@@ -96,12 +96,7 @@ class _SignUp extends State<SignUp>{
                       duration: Duration(seconds: 5),
                       backgroundColor: Colors.blue,
                     ));}
-                // }else{
-                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
-                //   Text('name is required',style: TextStyle(fontSize: 20),),
-                //     duration: Duration(seconds: 5),
-                //     backgroundColor: Colors.blue,
-                //   ));}
+
               },
             ),
 
@@ -124,14 +119,16 @@ class _SignUp extends State<SignUp>{
         });
       },
       verificationFailed: (FirebaseAuthException e) {
-        print(e.message.toString());
+        setState(() {wait=false;});
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
         Text(e.message.toString(),style: TextStyle(fontSize: 20),),
         duration: Duration(seconds: 5),
           backgroundColor: Colors.blue,
         ));
       },
+
       codeSent: (String _verificationId, int? resendToken) {
+        setState(() {wait=false;});
         enter_sms_code();
         verificationId = _verificationId;
       },

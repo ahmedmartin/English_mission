@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'dictionary.dart';
+
 
 class Home extends StatefulWidget{
   @override
@@ -130,13 +132,13 @@ class _Home extends State<Home>{
               ),
 
               //dictionary
-              GestureDetector(
+              GestureDetector (
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 20,
                   child: Icon(Icons.menu_book_outlined,size: 25,color: Colors.blue,),
                 ),
-                onTap: (){},
+                onTap: ()=> Get.to(Dictionary()),
               ),
 
               //game
@@ -175,7 +177,7 @@ class _Home extends State<Home>{
         // ---------------------ielts----------------
         GestureDetector(
           child: ClipOval(
-            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/6,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://myhobbycourses.com/sites/default/files/IELTS-scaled.jpg'),
+            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/7,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://myhobbycourses.com/sites/default/files/IELTS-scaled.jpg'),
           ),
           onTap: (){},
         ),
@@ -184,7 +186,7 @@ class _Home extends State<Home>{
         GestureDetector(
 
           child: ClipOval(
-            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/6,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://image.shutterstock.com/image-vector/toefl-word-concept-test-english-260nw-1565002888.jpg'),
+            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/7,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://image.shutterstock.com/image-vector/toefl-word-concept-test-english-260nw-1565002888.jpg'),
           ),
           onTap: (){},
         ),
@@ -197,7 +199,7 @@ class _Home extends State<Home>{
     return // ------------------------general english----------------------------
       GestureDetector(
         child: ClipOval(
-          child: FadeInImage.assetNetwork(width: Get.width/2,height: Get.height/4,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://thumbs.dreamstime.com/b/english-lesson-school-cartoon-people-characters-illustration-teacher-happy-student-speaking-blackboard-98066415.jpg'),
+          child: FadeInImage.assetNetwork(width: Get.width/2,height: Get.height/5,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://thumbs.dreamstime.com/b/english-lesson-school-cartoon-people-characters-illustration-teacher-happy-student-speaking-blackboard-98066415.jpg'),
         ),
         onTap: (){
           Get.to(Road_map());

@@ -1,9 +1,10 @@
 
-
+import 'dart:async';
 import 'package:english_mission/controller/lesson_controller.dart';
 import 'package:english_mission/view/question.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class Lesson extends StatefulWidget{
   @override
@@ -15,18 +16,17 @@ class Lesson extends StatefulWidget{
 
 class _Lesson extends State<Lesson>{
 
-  double screen_width = 0;
-  int screen_index =0;
-  
+  bool wait = true;
+
+
   @override
   Widget build(BuildContext context) {
-
     Lesson_controller lesson_controller = Get.put(Lesson_controller());
-    screen_width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: SingleChildScrollView(
+      body: Obx(()=>lesson_controller.wait.value?Center(child:Image.asset('assets/connection.gif')):SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20),
           child: Column(
             children: [
 
@@ -63,32 +63,26 @@ class _Lesson extends State<Lesson>{
             ],
           ),
         ),
-      ),
-
+      ),),
       // ---- continue button -----------
       floatingActionButton:Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
            Visibility(
-            visible:screen_index!=0 ,
+            visible:lesson_controller.screen_index!=0 ,
             child: Padding(
               padding: EdgeInsets.only(left: 10),
               child: FloatingActionButton(
                 heroTag: 'before',
                 onPressed: () {
-                  screen_index--;
+                  lesson_controller.screen_index--;
                   setState(() {});
-                  switch(lesson_controller.lessons_type[screen_index]){
+                  switch(lesson_controller.lessons_type[lesson_controller.screen_index]){
                     case 'screen_1':lesson_controller.screen_1();break;
                     case 'screen_2':lesson_controller.screen_2();break;
                     case 'screen_3':lesson_controller.screen_3();break;
                     case 'screen_4':lesson_controller.screen_4();break;
                   }
-                  // switch (lesson_controller.screen_index.value ){
-                  //   case 2: {lesson_controller.screne_1(); lesson_controller.screen_index.value = 1; break;}
-                  //   case 3: {lesson_controller.screne_2(); lesson_controller.screen_index.value = 2; break;}
-                  //   case 4: {lesson_controller.screne_3(); lesson_controller.screen_index.value = 3; break;}
-                  // }
                 },
                 child: Icon(Icons.navigate_before,color: Colors.white,size: 50,),
               ),
@@ -103,10 +97,10 @@ class _Lesson extends State<Lesson>{
               child: FloatingActionButton(
                 heroTag: 'next',
                 onPressed: () {
-                  screen_index++;
+                  lesson_controller.screen_index++;
                   setState(() {});
-                  if(screen_index<lesson_controller.lessons_type.length) {
-                    switch (lesson_controller.lessons_type[screen_index]) {
+                  if(lesson_controller.screen_index<lesson_controller.lessons_type.length) {
+                    switch (lesson_controller.lessons_type[lesson_controller.screen_index]) {
                       case 'screen_1':
                         lesson_controller.screen_1();
                         break;
@@ -122,12 +116,6 @@ class _Lesson extends State<Lesson>{
                     }
                   }else
                     Get.to(Question());
-                  // switch (lesson_controller.screen_index.value ){
-                  //   case 1: {lesson_controller.screne_2(); lesson_controller.screen_index.value = 2; break;}
-                  //   case 2: {lesson_controller.screne_3(); lesson_controller.screen_index.value = 3; break;}
-                  //   case 3: {lesson_controller.screne_4(); lesson_controller.screen_index.value = 4; break;}
-                  //   case 4: Get.to(Question());
-                  // }
                 },
                 child: Icon(Icons.navigate_next,color: Colors.white,size: 50,),
               ),
@@ -142,7 +130,7 @@ class _Lesson extends State<Lesson>{
 
   Widget image_frame(url){
     return Container(
-      width: screen_width/2,
+      width: Get.width/2,
       height: 150,
       child: FadeInImage.assetNetwork(placeholder: 'assets/fade_image.gif',image:url),
     );

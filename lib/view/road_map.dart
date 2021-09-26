@@ -16,8 +16,8 @@ class Road_map extends StatelessWidget{
     return Scaffold(
       //appBar: AppBar(title: Obx(() => Text("Clicks: ${road_map_controller.levels}"))),
       body: Center(
-        child: ListView.builder(
-            itemCount: road_map_controller.levels.length ,
+        child: Obx(()=>road_map_controller.wait.value ?Center(child:Image.asset('assets/connection.gif')):ListView.builder(
+            itemCount: road_map_controller.lessons.length ,
             physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             reverse: true,
             shrinkWrap: true,
@@ -28,7 +28,7 @@ class Road_map extends StatelessWidget{
                 onTap:(){
                   Get.to(Lesson());
                 } ,);
-            }),
+            }),)
       ),
     );
   }
@@ -39,7 +39,7 @@ class Road_map extends StatelessWidget{
       child: Align(
         alignment:index%2==0? Alignment.topLeft:Alignment.topRight,
         child: ClipOval(
-          child: FadeInImage.assetNetwork(width: Get.width/2,height: Get.height/4,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:road_map_controller.levels[index]),
+          child: FadeInImage.assetNetwork(width: Get.width/2,height: Get.height/4,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:road_map_controller.lessons[index]),
         ),
 
       ),

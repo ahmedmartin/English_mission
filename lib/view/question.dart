@@ -19,28 +19,24 @@ class _Question extends State<Question>{
 
   Question_controller question_controller = Get.put(Question_controller());
   List answer = [];
-  int question_index = 0;
-
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-        body: SingleChildScrollView(
-         // padding: EdgeInsets.only(left: 20,right: 20,bottom: 10,top: 20),
+        body:Obx(()=> question_controller.wait.value ?Center(child:Image.asset('assets/connection.gif')):SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20,),
+                SizedBox(height: 30,),
                 Container(
                   width: Get.size.width/2,
-                  child: LinearPercentIndicator(
+                  child: Obx(()=> LinearPercentIndicator(
                     lineHeight: 15.0,
-                    percent: question_index/question_controller.questions_type.length,
-                    center: Text(question_index.toString(), style: new TextStyle(fontSize: 12.0,color:Colors.white ),
+                    percent: question_controller.question_index/question_controller.questions_type.length,
+                    center: Text(question_controller.question_index.toString(), style: new TextStyle(fontSize: 12.0,color:Colors.white ),
                     ),
                     linearStrokeCap: LinearStrokeCap.roundAll,
                     backgroundColor: Colors.grey,
@@ -48,7 +44,7 @@ class _Question extends State<Question>{
                     animation: true,
                     animationDuration: 50,
                   ),
-                ),
+                ),),
                 SizedBox(height: 30,),
                 Obx(()=>Text(question_controller.title.value,
                   style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.blue),)),
@@ -98,7 +94,7 @@ class _Question extends State<Question>{
               ],
             ),
           ),
-        ),
+        ),)
     );
   }
 
@@ -125,13 +121,13 @@ class _Question extends State<Question>{
 
              // check question type if question (true_false or choose) and he not choose another answer
              // to be sure choose (only one answer )
-             if((question_controller.questions_type[question_index]=='true_false'||question_controller.questions_type[question_index]=='choose') && answer.isEmpty){
+             if((question_controller.questions_type[question_controller.question_index]=='true_false'||question_controller.questions_type[question_controller.question_index]=='choose') && answer.isEmpty){
                // not choose another answer before
                // add answer to answer list and show it in the screen
                question_controller.press_0.value= add_answer(0,question_controller.press_0.value);
                // check question type if question (translate or voice)
                // can choose (multiple of answer )
-             }else if(question_controller.questions_type[question_index]=='translate'||question_controller.questions_type[question_index]=='voice'){
+             }else if(question_controller.questions_type[question_controller.question_index]=='translate'||question_controller.questions_type[question_controller.question_index]=='voice'){
                // add answer to answer list and show it in the screen
                question_controller.press_0.value= add_answer(0,question_controller.press_0.value);
              }
@@ -162,13 +158,13 @@ class _Question extends State<Question>{
 
               // check question type if question (true_false or choose) and he not choose another answer
               // to be sure choose (only one answer )
-              if((question_controller.questions_type[question_index]=='true_false'||question_controller.questions_type[question_index]=='choose') && answer.isEmpty) {
+              if((question_controller.questions_type[question_controller.question_index]=='true_false'||question_controller.questions_type[question_controller.question_index]=='choose') && answer.isEmpty) {
                 // not choose another answer before
                 // add answer to answer list and show it in the screen
                 question_controller.press_1.value= add_answer(1, question_controller.press_1.value);
                 // check question type if question (translate or voice)
                 // can choose (multiple of answer )
-              }else if(question_controller.questions_type[question_index]=='translate'||question_controller.questions_type[question_index]=='voice'){
+              }else if(question_controller.questions_type[question_controller.question_index]=='translate'||question_controller.questions_type[question_controller.question_index]=='voice'){
                 // add answer to answer list and show it in the screen
                 question_controller.press_1.value= add_answer(1, question_controller.press_1.value);
               }
@@ -199,14 +195,14 @@ class _Question extends State<Question>{
               // check question type if question (choose) and he not choose another answer
               // (don't care about true_false cause this button not be visible there)
               // to be sure choose (only one answer )
-              if(question_controller.questions_type[question_index]=='choose' && answer.isEmpty) {
+              if(question_controller.questions_type[question_controller.question_index]=='choose' && answer.isEmpty) {
                 // not choose another answer before
                 // add answer to answer list and show it in the screen
 
                 question_controller.press_2.value= add_answer(2, question_controller.press_2.value);
                 // check question type if question (translate or voice)
                 // can choose (multiple of answer )
-              }else if(question_controller.questions_type[question_index]=='translate'||question_controller.questions_type[question_index]=='voice'){
+              }else if(question_controller.questions_type[question_controller.question_index]=='translate'||question_controller.questions_type[question_controller.question_index]=='voice'){
                 // add answer to answer list and show it in the screen
 
                 question_controller.press_2.value= add_answer(2, question_controller.press_2.value);
@@ -335,14 +331,14 @@ class _Question extends State<Question>{
   // show another question if question list not complete
   // else show congratulation popup screen
   press_on_snack_bar(){
-    question_index++;
+    question_controller.question_index++;
     Get.back();
     wait_another_question=false;
     setState(() {});
     // if this is a last question then turn back to road map
-    if (question_index < question_controller.questions_type.length) {
+    if (question_controller.question_index < question_controller.questions_type.length) {
       // show suitable question
-      switch (question_controller.questions_type[question_index]) {
+      switch (question_controller.questions_type[question_controller.question_index]) {
         case 'true_false':
           question_controller.true_false();
           break;

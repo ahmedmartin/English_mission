@@ -12,12 +12,16 @@ class Profile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Profile Info",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+      ),
       body: Column(
         children: [
           Container(
             width: Get.width,
             color: Colors.blue,
-            padding: EdgeInsets.only(top: 40,bottom: 20),
+            padding: EdgeInsets.only(top: 10,bottom: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

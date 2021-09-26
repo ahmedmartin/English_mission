@@ -22,7 +22,7 @@ class _Note_pad extends State<Note_pad>{
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Word's Bank",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),),
+        title: Text("Word's Bank",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
       ),
       body: Padding(
         padding: EdgeInsets.all(20),

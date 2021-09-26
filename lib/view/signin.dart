@@ -17,7 +17,7 @@ class SignIn extends StatefulWidget{
 class _SignIn extends State<SignIn>{
 
   TextEditingController phone_controller = TextEditingController();
-
+  bool wait = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,12 +59,12 @@ class _SignIn extends State<SignIn>{
                 ),
                 padding: EdgeInsets.all(20),
                 //color: Colors.blue,
-                child: Text('Register',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),),
+                child: wait?CircularProgressIndicator(color: Colors.white,):Text('Register',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),),
               ),
               onTap: (){
 
                   if (phone_controller.text.isNotEmpty) {
-                   // if (phone_controller.text.length == 11) {
+                    setState(() {wait=true;});
                       firebase_Auth();
                     } else{
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
@@ -72,13 +72,6 @@ class _SignIn extends State<SignIn>{
                         duration: Duration(seconds: 5),
                         backgroundColor: Colors.blue,
                       ));}
-                  // } else{
-                  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
-                  //   Text('Phone is required', style: TextStyle(fontSize: 20),),
-                  //     duration: Duration(seconds: 5),
-                  //     backgroundColor: Colors.blue,
-                  //   ));}
-
               },
             ),
 
@@ -100,8 +93,9 @@ class _SignIn extends State<SignIn>{
           print('sign in');
         });
       },
+
       verificationFailed: (FirebaseAuthException e) {
-        print(e.message.toString());
+        setState(() {wait=false;});
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
         Text(e.message.toString(),style: TextStyle(fontSize: 20),),
           duration: Duration(seconds: 5),
@@ -109,6 +103,7 @@ class _SignIn extends State<SignIn>{
         ));
       },
       codeSent: (String _verificationId, int? resendToken) {
+        setState(() {wait=false;});
         enter_sms_code();
         verificationId = _verificationId;
       },

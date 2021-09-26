@@ -1,9 +1,9 @@
-import 'package:english_mission/view/home.dart';
-import 'package:english_mission/view/signup.dart';
+import 'dart:async';
 import 'package:english_mission/view/start_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
