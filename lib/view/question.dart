@@ -1,5 +1,6 @@
 //import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:english_mission/controller/network_connection.dart';
 import 'package:english_mission/controller/question_controller.dart';
 import 'package:english_mission/view/home.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +19,14 @@ class Question extends StatefulWidget {
 class _Question extends State<Question>{
 
   Question_controller question_controller = Get.put(Question_controller());
+  Network_connection_controller network_controller = Get.find();
   List answer = [];
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-        body:Obx(()=> question_controller.wait.value ?Center(child:Image.asset('assets/connection.gif')):SingleChildScrollView(
+        body:Obx(()=> network_controller.wait.value ?Center(child:Image.asset('assets/connection.gif')):SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Column(

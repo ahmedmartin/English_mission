@@ -21,36 +21,21 @@ class Road_map_controller extends GetxController{
   'https://thumbs.dreamstime.com/b/teacher-kids-vector-illustration-isolated-back-school-backpack-books-boy-casual-clothes-character-child-childhood-children-157364823.jpg',*/
   ].obs;
 
-  RxBool wait = true.obs;
-  StreamSubscription<InternetConnectionStatus> ?listener ;
 
   @override
   void onInit() async{
-    listener = InternetConnectionChecker().onStatusChange.listen(
-          (InternetConnectionStatus status) {
-        switch (status) {
-          case InternetConnectionStatus.connected:
-          // ignore: avoid_print
-              wait.value=false;
-              _get_lessons();
-              //lessons.value = await _get_lessons();
-            break;
-          case InternetConnectionStatus.disconnected:
-          // ignore: avoid_print
-              wait.value=true;
-            break;
-        }
-      },
-    );
+
+    get_lessons();
 
     super.onInit();
   }
 
-  _get_lessons()async{
+
+  get_lessons()async{
+
     var v ;
     lessons.clear();
     await FirebaseFirestore.instance.collection('courses').doc('english').get().then((snapshot){
-      print(snapshot['lessons']) ;
         v = snapshot['lessons'];
         lessons.value = snapshot['lessons'];
     });

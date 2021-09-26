@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -174,8 +175,12 @@ class _SignUp extends State<SignUp>{
                       PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: sms_code.text);
                       // Sign the user in (or link) with the credential
                       await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential).whenComplete((){
-                        print('signed in success 1');
-                        //Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (c)=>Home()), (route) => false);
+                        FirebaseAuth.instance.currentUser!.updateDisplayName(name_controller.text);
+                        FirebaseAuth.instance.currentUser!.updatePhotoURL('0'); // points
+                        FirebaseFirestore.instance.collection('users').doc(phone_controller.text).set(
+                            {
+                              'courses':{'english':1},
+                            }) ;
                         Get.offAll(Home());
                       });
                     }

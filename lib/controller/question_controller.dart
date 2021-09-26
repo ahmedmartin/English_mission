@@ -21,26 +21,11 @@ class Question_controller extends GetxController{
   List<QueryDocumentSnapshot> data =[];
   Question_model question_model = Question_model('1');
   int question_index =0;
-  RxBool wait = true.obs;
-  StreamSubscription<InternetConnectionStatus> ?listener ;
+
 
   @override
   void onInit() async{
-    listener = InternetConnectionChecker().onStatusChange.listen(
-          (InternetConnectionStatus status) {
-        switch (status) {
-          case InternetConnectionStatus.connected:
-          // ignore: avoid_print
-            wait.value=false;
-            _get_data();
-            break;
-          case InternetConnectionStatus.disconnected:
-          // ignore: avoid_print
-            wait.value=true;
-            break;
-        }
-      },
-    );
+    _get_data();
   }
 
   _get_data() async {
@@ -58,7 +43,6 @@ class Question_controller extends GetxController{
   }
 
   _questions_type(){
-    wait.value = false;
     data.forEach((element) {
       print(element['question_type']);
       questions_type.add(element['question_type']);

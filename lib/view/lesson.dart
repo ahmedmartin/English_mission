@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'package:english_mission/controller/lesson_controller.dart';
+import 'package:english_mission/controller/network_connection.dart';
 import 'package:english_mission/view/question.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,15 +17,14 @@ class Lesson extends StatefulWidget{
 
 class _Lesson extends State<Lesson>{
 
-  bool wait = true;
-
+  Lesson_controller lesson_controller = Get.put(Lesson_controller());
+  Network_connection_controller network_controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    Lesson_controller lesson_controller = Get.put(Lesson_controller());
 
     return Scaffold(
-      body: Obx(()=>lesson_controller.wait.value?Center(child:Image.asset('assets/connection.gif')):SingleChildScrollView(
+      body: Obx(()=>network_controller.wait.value?Center(child:Image.asset('assets/connection.gif')):SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -65,11 +65,11 @@ class _Lesson extends State<Lesson>{
         ),
       ),),
       // ---- continue button -----------
-      floatingActionButton:Row(
+      floatingActionButton:Obx(()=>Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
            Visibility(
-            visible:lesson_controller.screen_index!=0 ,
+            visible:lesson_controller.screen_index!=0 && !network_controller.wait.value ,
             child: Padding(
               padding: EdgeInsets.only(left: 10),
               child: FloatingActionButton(
@@ -91,7 +91,7 @@ class _Lesson extends State<Lesson>{
 
 
           Visibility(
-            //visible: lesson_controller.screen_index.value!=4,
+            visible: !network_controller.wait.value ,
             child: Padding(
               padding: EdgeInsets.only(right: 10),
               child: FloatingActionButton(
@@ -114,15 +114,16 @@ class _Lesson extends State<Lesson>{
                         lesson_controller.screen_4();
                         break;
                     }
-                  }else
+                  }else{
                     Get.to(Question());
+                  }
                 },
                 child: Icon(Icons.navigate_next,color: Colors.white,size: 50,),
               ),
             ),
           )
         ],
-      ),
+      ),),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

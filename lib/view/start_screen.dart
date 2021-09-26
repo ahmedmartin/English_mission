@@ -1,4 +1,7 @@
+import 'package:english_mission/controller/network_connection.dart';
 import 'package:english_mission/view/signin.dart';
+import 'package:english_mission/view/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,8 +12,11 @@ import 'home.dart';
 
 class Start_screen extends StatelessWidget{
 
+Network_connection_controller network_connection_controller = Get.put(Network_connection_controller());
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Column(
         children: [

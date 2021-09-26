@@ -18,31 +18,18 @@ class Lesson_controller extends GetxController{
   Lesson_model lesson_model = Lesson_model('1');
   List<QueryDocumentSnapshot> data =[];
   int screen_index = 0;
-  RxBool wait = true.obs;
-  StreamSubscription<InternetConnectionStatus> ?listener ;
+
+
 
   @override
-  void onInit() async {
-
-    listener = InternetConnectionChecker().onStatusChange.listen(
-          (InternetConnectionStatus status) {
-        switch (status) {
-          case InternetConnectionStatus.connected:
-          // ignore: avoid_print
-              wait.value=false;
-              _get_data();
-            break;
-          case InternetConnectionStatus.disconnected:
-          // ignore: avoid_print
-            wait.value=true;
-            break;
-        }
-      },
-    );
-
+  void onInit() async{
+    get_data();
   }
 
-  _get_data() async {
+
+
+
+  get_data() async {
     data = await lesson_model.get_lesson_screens();
 
     if(data!=null)
@@ -58,7 +45,6 @@ class Lesson_controller extends GetxController{
   }
 
   _lessons_type(){
-    wait.value = false;
     data.forEach((element) {
       print(element['screen_type']);
       lessons_type.add(element['screen_type']);

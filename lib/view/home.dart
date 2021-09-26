@@ -45,44 +45,23 @@ class _Home extends State<Home>{
         child: Align(
           alignment: FractionalOffset.topCenter ,
           child:Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                 // height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(80),bottomRight:Radius.circular(80),
+            child: Container(
+              width: 110,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(80),bottomRight:Radius.circular(80),
                     topLeft: Radius.circular(100),bottomLeft: Radius.circular(100)),
-                    color: Colors.blue,
-                  ),
-                  padding: EdgeInsets.only(right: 20),
-                  child: Row(
-                    //crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(backgroundImage: AssetImage('assets/coin.png'),radius: 25,),
-                      SizedBox(width: 10,),
-                      Text(0.toString(),style: TextStyle(fontSize: 18,color: Colors.white),)
-                    ],
-                  ),
-                ),
-
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  padding: EdgeInsets.only(right: 20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.keyboard_arrow_up_rounded,color: Colors.white,size: 45,),
-                      SizedBox(width: 10,),
-                      Text(0.toString(),style: TextStyle(fontSize: 18,color: Colors.white),)
-                    ],
-                  ),
-                ),
-              ],
+                color: Colors.blue,
+              ),
+              padding: EdgeInsets.only(right: 20),
+              child: Row(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(backgroundImage: AssetImage('assets/coin.png'),radius: 25,),
+                  SizedBox(width: 20,),
+                  // photoURL is a total point (عملتها كده اختصار ليه)
+                  Text(FirebaseAuth.instance.currentUser!.photoURL!,style: TextStyle(fontSize: 18,color: Colors.white),)
+                ],
+              ),
             ),
           ) ,
         )
