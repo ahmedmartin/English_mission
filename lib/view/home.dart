@@ -1,4 +1,5 @@
-import 'package:english_mission/view/note_bad.dart';
+import 'package:english_mission/view/game_road_map.dart';
+import 'package:english_mission/view/notepad.dart';
 import 'package:english_mission/view/profile.dart';
 import 'package:english_mission/view/road_map.dart';
 import 'package:english_mission/view/signup.dart';
@@ -26,11 +27,11 @@ class _Home extends State<Home>{
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           SizedBox(height: 40,),
           coin_par(),
+          SizedBox(height: 20,),
           upgrade_courses(),
-          SizedBox(height: 70,),
+          SizedBox(height: 50,),
           general_course(),
           SizedBox(height: 40,),
           tab_par(),
@@ -59,7 +60,8 @@ class _Home extends State<Home>{
                   CircleAvatar(backgroundImage: AssetImage('assets/coin.png'),radius: 25,),
                   SizedBox(width: 20,),
                   // photoURL is a total point (عملتها كده اختصار ليه)
-                  Text(FirebaseAuth.instance.currentUser!.photoURL!,style: TextStyle(fontSize: 18,color: Colors.white),)
+                 // FirebaseAuth.instance.currentUser!.photoURL!
+                  Text('1',style: TextStyle(fontSize: 18,color: Colors.white),)
                 ],
               ),
             ),
@@ -87,16 +89,16 @@ class _Home extends State<Home>{
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               //profile info
-              GestureDetector(
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(Icons.person,size:25,color: Colors.blue,),
-                ),
-                onTap: (){
-                   Get.to(Profile());
-                },
-              ),
+              // GestureDetector(
+              //   child: CircleAvatar(
+              //     backgroundColor: Colors.white,
+              //     radius: 20,
+              //     child: Icon(Icons.person,size:25,color: Colors.blue,),
+              //   ),
+              //   onTap: (){
+              //      Get.to(Profile());
+              //   },
+              // ),
 
               //notepad
               GestureDetector(
@@ -127,7 +129,7 @@ class _Home extends State<Home>{
                   radius: 20,
                   child: Icon(Icons.videogame_asset,size: 25,color: Colors.blue,),
                 ),
-                onTap: (){},
+                onTap: (){Get.to(Game_road_map());},
               ),
 
               //store
@@ -155,8 +157,9 @@ class _Home extends State<Home>{
       children: [
         // ---------------------ielts----------------
         GestureDetector(
-          child: ClipOval(
-            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/7,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://myhobbycourses.com/sites/default/files/IELTS-scaled.jpg'),
+          child: CircleAvatar(
+            backgroundImage: AssetImage('assets/ielts.png'),
+            radius: Get.width/5,
           ),
           onTap: (){},
         ),
@@ -164,8 +167,9 @@ class _Home extends State<Home>{
         //----------- toefl  ----------------------
         GestureDetector(
 
-          child: ClipOval(
-            child: FadeInImage.assetNetwork(width: Get.width/3,height: Get.height/7,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://image.shutterstock.com/image-vector/toefl-word-concept-test-english-260nw-1565002888.jpg'),
+          child: CircleAvatar(
+            backgroundImage: AssetImage('assets/toefl.png'),
+            radius: Get.width/5,
           ),
           onTap: (){},
         ),
@@ -177,8 +181,9 @@ class _Home extends State<Home>{
   Widget general_course(){
     return // ------------------------general english----------------------------
       GestureDetector(
-        child: ClipOval(
-          child: FadeInImage.assetNetwork(width: Get.width/2,height: Get.height/5,fit:BoxFit.fill,placeholder: 'assets/fade_image.gif',image:'https://thumbs.dreamstime.com/b/english-lesson-school-cartoon-people-characters-illustration-teacher-happy-student-speaking-blackboard-98066415.jpg'),
+        child: CircleAvatar(
+          backgroundImage: AssetImage('assets/general.png'),
+          radius: Get.width/4,
         ),
         onTap: (){
           Get.to(Road_map());

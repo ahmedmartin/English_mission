@@ -1,4 +1,6 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:english_mission/controller/network_connection.dart';
+import 'package:get/get.dart';
 import 'package:language_picker/language_picker_dropdown.dart';
 import 'package:language_picker/languages.dart';
 import 'package:language_picker/languages.g.dart';
@@ -27,6 +29,7 @@ class _Dictionary extends State<Dictionary>{
     Languages.korean,Languages.russian,Languages.german,
   ];
   bool wait = false;
+  Network_connection_controller network_controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class _Dictionary extends State<Dictionary>{
         centerTitle: true,
         title: Text('Translation',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
       ),
-      body: Padding(
+      body: Obx(()=>network_controller.wait.value ?  Center(child:Image.asset('assets/connection.gif')):Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
@@ -88,7 +91,7 @@ class _Dictionary extends State<Dictionary>{
             ],
           ),
         ),
-      ),
+      ),)
     );
   }
 

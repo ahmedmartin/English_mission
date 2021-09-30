@@ -62,12 +62,12 @@ class _Store extends State<Store>{
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
       ),
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(courses[index].title!,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue),),
-          SizedBox(height: 10,),
+          SizedBox(height: 5,),
           // image view
           Container(
             width: Get.size.width/2,
