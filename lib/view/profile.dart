@@ -22,8 +22,8 @@ class _Profile extends State<Profile>{
   profile_info(){
 
     setState(() {
-      phone = FirebaseAuth.instance.currentUser!.phoneNumber!;
-      name = FirebaseAuth.instance.currentUser!.displayName!;
+      phone = 'my phone'; //FirebaseAuth.instance.currentUser!.phoneNumber!;
+      name = 'my name';//FirebaseAuth.instance.currentUser!.displayName!;
     });
     FirebaseFirestore.instance.collection('users').doc(phone).get().then((snapshot){
        setState(() {
@@ -89,10 +89,3 @@ class _Profile extends State<Profile>{
   }
 
 }
-
-// class Point {
-//   String? points;
-//   String? level;
-//
-//   Point(this.points, this.level);
-// }

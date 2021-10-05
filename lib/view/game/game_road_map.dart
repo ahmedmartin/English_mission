@@ -1,5 +1,6 @@
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
-import 'package:english_mission/view/word_craft.dart';
+import 'package:english_mission/view/game/game_list.dart';
+import 'package:english_mission/view/game/word_craft.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,7 @@ class Game_road_map extends StatelessWidget{
         image: DecorationImage(image:AssetImage('assets/word_craft.png'))
     ),),];
 
-  List routs =[Word_craft(),Word_craft(),Word_craft(),Word_craft(),Word_craft()];
+  List routs =['timer','situation','timer','word_craft','word_craft'];
 
   ScrollController  scroll = ScrollController();
 
@@ -36,7 +37,7 @@ class Game_road_map extends StatelessWidget{
           itemCount: images.length,
           scrollController: scroll,
           onItemTapCallback: (index){
-            Get.to(routs[index]);
+            Get.to(Game_list(routs[index])); // move to game list to choose which game level will play
           },
           child: ListWheelScrollView(
               controller: scroll,

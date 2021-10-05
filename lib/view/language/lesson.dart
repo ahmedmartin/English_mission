@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:english_mission/controller/lesson_controller.dart';
 import 'package:english_mission/controller/network_connection.dart';
-import 'package:english_mission/view/question.dart';
+import 'package:english_mission/view/language/question.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';

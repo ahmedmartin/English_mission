@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:english_mission/controller/network_connection.dart';
 import 'package:english_mission/view/signin.dart';
 import 'package:english_mission/view/signup.dart';
@@ -13,7 +15,7 @@ import 'home.dart';
 class Start_screen extends StatelessWidget{
 
 Network_connection_controller network_connection_controller = Get.put(Network_connection_controller());
-
+StreamSubscription <User?> ?user_listen;
   @override
   Widget build(BuildContext context) {
 
@@ -48,7 +50,17 @@ Network_connection_controller network_connection_controller = Get.put(Network_co
                       child: Center(child: Text('Start Now',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),)),
                     ),
                     onTap: (){
-                      Get.off(Home());
+
+                      user_listen = FirebaseAuth.instance.authStateChanges().listen((User ?user) {
+                        if (user != null) {
+                          user_listen!.cancel();
+                          Get.off(Home());
+                        }else{
+                          user_listen!.cancel();
+                          Get.off(SignUp());
+                        }
+                      });
+                      //
                     },
                   ),
                   SizedBox(height: 20,),

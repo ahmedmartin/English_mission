@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:blur/blur.dart';
+import 'package:english_mission/controller/network_connection.dart';
 import 'package:english_mission/controller/word_craft_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,13 +10,14 @@ import 'package:get/get.dart';
 
 class Word_craft extends StatelessWidget{
 
-  Word_craft_controller craft_controller = Get.put(Word_craft_controller());
 
+  Word_craft_controller craft_controller = Get.find();
+  Network_connection_controller network_controller = Get.find();
   @override
   Widget build(BuildContext context) {
-   print(Get.height.toString()+' '+Get.width.toString());
+
     return Scaffold(
-      body: Container(
+      body:Obx(()=> network_controller.wait.value ?Center(child:Image.asset('assets/connection.gif')): Container(
         height: Get.height,
         width: Get.width,
         decoration: BoxDecoration(
@@ -35,8 +37,8 @@ class Word_craft extends StatelessWidget{
                   padding: EdgeInsets.all(10),
                   height: Get.height>550?340:230,
                   width: Get.width,
-                  child: GridView.builder(
-                      itemCount: 25,
+                  child: Obx(() => GridView.builder(
+                      itemCount: craft_controller.litters.length,
                       controller: ScrollController(initialScrollOffset: 0),
                       scrollDirection: Axis.vertical ,
                       physics: NeverScrollableScrollPhysics(),
@@ -48,7 +50,7 @@ class Word_craft extends StatelessWidget{
                       ),
                       itemBuilder: (context,index){
                         return draw_list(index);
-                      }),
+                      }),)
                 ).frosted(blur: 1,frostColor: Colors.white,borderRadius: BorderRadius.circular(20) ),
 
                 SizedBox(height: 10,),
@@ -68,7 +70,7 @@ class Word_craft extends StatelessWidget{
             ),
           ),
         ),
-      ),
+      ),)
     );
   }
   Widget first_question(){
@@ -77,26 +79,26 @@ class Word_craft extends StatelessWidget{
       children: [
         Column(
           children: [
-            Obx(() => Text(craft_controller.questions[0],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
+            Obx(() => Text(craft_controller.questions.isNotEmpty?craft_controller.questions[0]:'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
             Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blue,width: 2),
                     borderRadius: BorderRadius.circular(10)
                 ),
                 padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
-                child: Obx(() => Text(craft_controller.answers[0],style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
+                child: Obx(() => Text(craft_controller.answers.isNotEmpty?craft_controller.answers[0]:'',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
           ],
         ),
         Column(
           children: [
-            Obx(() => Text(craft_controller.questions[1],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
+            Obx(() => Text(craft_controller.questions.isNotEmpty?craft_controller.questions[1]:'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
             Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blue,width: 2),
                     borderRadius: BorderRadius.circular(10)
                 ),
                 padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
-                child: Obx(() => Text(craft_controller.answers[1],style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
+                child: Obx(() => Text(craft_controller.answers.isNotEmpty?craft_controller.answers[1]:'',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
           ],
         ),
       ],
@@ -109,26 +111,26 @@ class Word_craft extends StatelessWidget{
       children: [
         Column(
           children: [
-            Obx(() => Text(craft_controller.questions[2],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
+            Obx(() => Text(craft_controller.questions.isNotEmpty?craft_controller.questions[2]:'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
             Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blue,width: 2),
                     borderRadius: BorderRadius.circular(10)
                 ),
                 padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
-                child: Obx(() => Text(craft_controller.answers[2],style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
+                child: Obx(() => Text(craft_controller.answers.isNotEmpty?craft_controller.answers[2]:'',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
           ],
         ),
         Column(
           children: [
-            Obx(() => Text(craft_controller.questions[3],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
+            Obx(() => Text(craft_controller.questions.isNotEmpty?craft_controller.questions[3]:'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
             Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blue,width: 2),
                     borderRadius: BorderRadius.circular(10)
                 ),
                 padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
-                child: Obx(() => Text(craft_controller.answers[3],style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
+                child: Obx(() => Text(craft_controller.answers.isNotEmpty?craft_controller.answers[3]:'',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
           ],
         ),
       ],
@@ -138,14 +140,14 @@ class Word_craft extends StatelessWidget{
   Widget third_question(){
     return Column(
       children: [
-        Obx(() => Text(craft_controller.questions[4],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
+        Obx(() => Text(craft_controller.questions.isNotEmpty?craft_controller.questions[4]:'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
         Container(
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue,width: 2),
                 borderRadius: BorderRadius.circular(10)
             ),
             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
-            child: Obx(() => Text(craft_controller.answers[4],style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
+            child: Obx(() => Text(craft_controller.answers.isNotEmpty?craft_controller.answers[4]:'',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),))),
       ],
     );
   }
@@ -161,10 +163,23 @@ class Word_craft extends StatelessWidget{
         child: Text('Check',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 30),),
       ),
       onTap: (){
-        if(craft_controller.check_answer())
-          AudioCache().play('correct.mp3');
-        else
-          AudioCache().play('wrong.mp3');
+
+          if (craft_controller.check_answer()) {
+            print(craft_controller.finish);
+            if(craft_controller.finish) {
+              AudioCache().play('celebrate.mp3');
+              Get.defaultDialog(
+                  barrierDismissible: false,
+                  title: 'Congratulations',
+                  content: Image.asset('assets/congratulation.gif'),//network('https://i.pinimg.com/originals/93/d2/88/93d2882e452875ffe11f3cc7aeba2b6f.gif'),
+                  onConfirm: (){Get.back(); Get.back();},
+                  onWillPop: ()=>Future.value(false)
+              );
+            }else
+            AudioCache().play('correct.mp3');
+          } else
+            AudioCache().play('wrong.mp3');
+
       },
     );
   }
@@ -191,4 +206,6 @@ class Word_craft extends StatelessWidget{
       },
     );
   }
+
+
 }

@@ -1,20 +1,47 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 
 
 class Word_craft_controller extends GetxController{
 
-  RxList<String> litters = ["c", "a", "t", "w", "e", "f", "d", "o", "g", "q", "d", "e", "b", "o", "y", "n", "m", "a", "p", 'q',"b", "r", "e", "a", "k"].obs;
-  RxList<bool> pressed = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false].obs;
+  RxList litters = [].obs;
+  RxList pressed = [].obs;
   RxMap word = {}.obs;
-  List correct_answers = ['cat','map','boy','break','dog'];
-  RxList questions = ['قطه','خريطه','ولد','يكسر','كلب'].obs;
-  RxList answers = ['','','','',''].obs;
+  List correct_answers = [];
+  RxList questions = [].obs;
+  RxList<String> answers = ['','','','',''].obs;
+  int ?game_level ;
+  bool finish= true;
+
+
+  get_game() async {
+    var v;
+    litters.clear();
+    questions.clear();
+    correct_answers.clear();
+    answers.clear();
+    await FirebaseFirestore.instance.collection('word_craft').doc(game_level.toString()).get().then((snapshot){
+      print(snapshot['game']);
+      print(snapshot['answer']);
+      litters.value = snapshot['game'];
+      Map map = snapshot['answer'];
+      map.forEach((key, value) {
+        questions.add(key);
+        correct_answers.add(value);
+      });
+      answers.value = ['','','','',''];
+      pressed.value = List.filled(25, false);
+    });
+    return await v;
+  }
 
 
   bool check_answer(){
     String temp = '';
+    finish = true;
     word.forEach((key, value) {
       temp +=value;
     });
@@ -24,8 +51,12 @@ class Word_craft_controller extends GetxController{
       });
       answers[correct_answers.indexOf(temp)]=temp;
       word.clear();
+      answers.forEach((element) {
+         if(element.toString().isEmpty) finish = false;
+      });
     }
     return correct_answers.contains(temp);
   }
+
 
 }

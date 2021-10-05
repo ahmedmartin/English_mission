@@ -1,7 +1,7 @@
-import 'package:english_mission/view/game_road_map.dart';
+import 'package:english_mission/view/game/game_road_map.dart';
 import 'package:english_mission/view/notepad.dart';
 import 'package:english_mission/view/profile.dart';
-import 'package:english_mission/view/road_map.dart';
+import 'package:english_mission/view/language/road_map.dart';
 import 'package:english_mission/view/signup.dart';
 import 'package:english_mission/view/store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,7 +60,7 @@ class _Home extends State<Home>{
                   CircleAvatar(backgroundImage: AssetImage('assets/coin.png'),radius: 25,),
                   SizedBox(width: 20,),
                   // photoURL is a total point (عملتها كده اختصار ليه)
-                 // FirebaseAuth.instance.currentUser!.photoURL!
+                  //FirebaseAuth.instance.currentUser!.photoURL!
                   Text('1',style: TextStyle(fontSize: 18,color: Colors.white),)
                 ],
               ),
@@ -88,17 +88,17 @@ class _Home extends State<Home>{
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              //profile info
-              // GestureDetector(
-              //   child: CircleAvatar(
-              //     backgroundColor: Colors.white,
-              //     radius: 20,
-              //     child: Icon(Icons.person,size:25,color: Colors.blue,),
-              //   ),
-              //   onTap: (){
-              //      Get.to(Profile());
-              //   },
-              // ),
+             // profile info
+              GestureDetector(
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 20,
+                  child: Icon(Icons.person,size:25,color: Colors.blue,),
+                ),
+                onTap: (){
+                   Get.to(Profile());
+                },
+              ),
 
               //notepad
               GestureDetector(
